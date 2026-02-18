@@ -3,240 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lost & Found Center | ศูนย์รวมแจ้งของหาย</title>
+    <title>Lost & Found Portal | ศูนย์แจ้งของหายและของที่เก็บได้</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f0f2f5; /* สีพื้นหลังอ่อนๆ สบายตา */
-            color: #343a40; /* สีข้อความหลัก */
-        }
-        .hero-section {
-            background: linear-gradient 135deg, #0056b3, #007bff); /* ไล่เฉดสีน้ำเงิน */
-            color: white;
-            padding: 70px 0;
-            margin-bottom: 40px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-        }
-        .hero-section h1 {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-        .hero-section .lead {
-            font-size: 1.25rem;
-            opacity: 0.9;
-        }
-        .btn-primary-hero {
-            background-color: #ffffff; /* ปุ่มสีขาว */
-            border-color: #ffffff;
-            color: #0056b3; /* ข้อความสีน้ำเงินเข้ม */
-            font-weight: bold;
-            padding: 12px 30px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-        }
-        .btn-primary-hero:hover {
-            background-color: #e2e6ea;
-            border-color: #e2e6ea;
-            color: #0056b3;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        :root {
+            --primary-navy: #1a2a6c; /* น้ำเงินเข้มทางการ */
+            --accent-blue: #0052cc;  /* น้ำเงินสว่างสำหรับ Link */
+            --status-lost: #b91c1c;  /* แดงเข้ม (Crimson) ตัดกับพื้นขาวชัดเจน */
+            --status-found: #065f46; /* เขียวเข้ม (Emerald) ตัดกับพื้นขาวชัดเจน */
+            --bg-light: #f8fafc;     /* พื้นหลังเทาขาว สบายตา */
         }
 
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-light);
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* Header ที่เน้นความน่าเชื่อถือ */
+        .navbar {
+            background-color: var(--primary-navy);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .hero-section {
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero-title {
+            color: var(--primary-navy);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Card ดีไซน์เน้นความชัดเจน ไม่กลืนกับพื้นหลัง */
         .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* เงาที่ดูเบาและทันสมัย */
-        }
-        .card:hover {
-            transform: translateY(-8px); /* ยกขึ้นเล็กน้อยเมื่อ Hover */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-        }
-        .card-title {
-            color: #0056b3; /* ชื่อสิ่งของเป็นสีน้ำเงินเข้ม */
-            font-weight: 600;
-        }
-        .badge-lost {
-            background-color: #dc3545; /* สีแดงสำหรับของหาย */
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: normal;
-        }
-        .badge-found {
-            background-color: #28a745; /* สีเขียวสำหรับเก็บได้ */
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: normal;
-        }
-        .btn-outline-danger {
-            color: #dc3545;
-            border-color: #dc3545;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
             transition: all 0.2s ease;
         }
-        .btn-outline-danger:hover {
-            background-color: #dc3545;
-            color: white;
-            transform: scale(1.05);
+
+        .card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 20px rgba(0, 82, 204, 0.05);
         }
-        .modal-content {
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-        .modal-header {
-            background-color: #007bff;
-            color: white;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            border-bottom: none;
-        }
-        .modal-title {
+
+        /* Badge ที่สีตัดกับเนื้อหาชัดเจน */
+        .badge-lost {
+            background-color: #fee2e2;
+            color: var(--status-lost);
+            border: 1px solid #fecaca;
             font-weight: 600;
         }
-        .form-label {
+
+        .badge-found {
+            background-color: #d1fae5;
+            color: var(--status-found);
+            border: 1px solid #a7f3d0;
+            font-weight: 600;
+        }
+
+        /* ปุ่มที่ดูเป็นทางการ */
+        .btn-navy {
+            background-color: var(--primary-navy);
+            color: white;
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 8px;
+        }
+
+        .btn-navy:hover {
+            background-color: #0f172a;
+            color: white;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: #334155;
             font-weight: 500;
-            color: #495057;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
 
+<nav class="navbar navbar-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">
+            🛡️ Lost & Found Portal
+        </a>
+    </div>
+</nav>
+
 <div class="hero-section text-center">
     <div class="container">
-        <h1 class="display-4 fw-bold">ศูนย์รวมแจ้งของหาย & เก็บได้</h1>
-        <p class="lead">ช่วยกันส่งคืนสิ่งของให้กับเจ้าของอย่างรวดเร็วและง่ายดาย</p>
-        <button class="btn btn-primary-hero btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#reportModal">➕ แจ้งรายการใหม่</button>
+        <h1 class="hero-title display-5">ศูนย์รับแจ้งของหายและส่งคืน</h1>
+        <p class="text-muted fs-5">แพลตฟอร์มกลางเพื่อความปลอดภัยและความซื่อสัตย์ในชุมชน</p>
+        <button class="btn btn-navy btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#reportModal">
+            ลงประกาศแจ้งรายการ
+        </button>
     </div>
 </div>
 
-<div class="container py-4">
-    <div class="row" id="itemsList">
+<div class="container mb-5">
+    <div class="row g-4" id="itemsList">
         </div>
-    <div class="alert alert-info text-center mt-4 d-none" role="alert" id="noItemsAlert">
-        ยังไม่มีรายการแจ้งของหายหรือเก็บได้ในขณะนี้ กรุณาเพิ่มรายการแรกของคุณ!
-    </div>
 </div>
 
-<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+<div class="modal fade" id="reportModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reportModalLabel">ลงข้อมูลของหาย / ของที่เก็บได้</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content shadow-lg border-0">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold" style="color: var(--primary-navy)">กรอกรายละเอียดรายการ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-4">
                 <form id="reportForm">
                     <div class="mb-3">
-                        <label for="type" class="form-label">ประเภท</label>
+                        <label class="form-label fw-bold">ประเภทประกาศ</label>
                         <select class="form-select" id="type" required>
-                            <option value="lost">ของหาย (Lost)</option>
-                            <option value="found">เก็บของได้ (Found)</option>
+                            <option value="lost">🔴 แจ้งของหาย (Lost Item)</option>
+                            <option value="found">🟢 พบของ/เก็บได้ (Found Item)</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="itemName" class="form-label">ชื่อสิ่งของ</label>
-                        <input type="text" class="form-control" id="itemName" placeholder="เช่น กระเป๋าสตางค์, กุญแจรถ, โทรศัพท์" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="location" class="form-label">สถานที่</label>
-                        <input type="text" class="form-control" id="location" placeholder="ระบุสถานที่ที่หายหรือพบ (เช่น หน้าห้องน้ำ, ใต้โต๊ะ)" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="contact" class="form-label">เบอร์ติดต่อ</label>
-                        <input type="tel" class="form-control" id="contact" placeholder="08x-xxx-xxxx หรือ Line ID" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 mt-3">ยืนยันการแจ้ง</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    const reportForm = document.getElementById('reportForm');
-    const itemsList = document.getElementById('itemsList');
-    const noItemsAlert = document.getElementById('noItemsAlert');
-
-    // โหลดข้อมูลจาก LocalStorage
-    let items = JSON.parse(localStorage.getItem('lostFoundItems')) || [];
-
-    function displayItems() {
-        itemsList.innerHTML = '';
-        if (items.length === 0) {
-            noItemsAlert.classList.remove('d-none');
-        } else {
-            noItemsAlert.classList.add('d-none');
-            items.forEach((item, index) => {
-                const badgeClass = item.type === 'lost' ? 'badge-lost' : 'badge-found';
-                const badgeText = item.type === 'lost' ? 'ของหาย' : 'เก็บได้';
-                
-                itemsList.innerHTML += `
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body d-flex flex-column">
-                                <span class="badge ${badgeClass} mb-2 align-self-start">${badgeText}</span>
-                                <h5 class="card-title">${item.itemName}</h5>
-                                <p class="card-text text-muted small flex-grow-1">
-                                    📍 สถานที่: ${item.location}<br>
-                                    📞 ติดต่อ: ${item.contact}
-                                </p>
-                                <button class="btn btn-outline-danger btn-sm mt-2" onclick="deleteItem(${index})">ลบประกาศ</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-    }
-
-    reportForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const newItem = {
-            type: document.getElementById('type').value,
-            itemName: document.getElementById('itemName').value,
-            location: document.getElementById('location').value,
-            contact: document.getElementById('contact').value
-        };
-        
-        items.unshift(newItem); // เพิ่มไว้บนสุด
-        localStorage.setItem('lostFoundItems', JSON.stringify(items));
-        reportForm.reset();
-        
-        // ปิด Modal
-        const modal = bootstrap.Modal.getInstance(document.getElementById('reportModal'));
-        modal.hide();
-        
-        displayItems();
-    });
-
-    function deleteItem(index) {
-        if(confirm('คุณแน่ใจใช่ไหมที่จะลบรายการนี้?')) {
-            items.splice(index, 1);
-            localStorage.setItem('lostFoundItems', JSON.stringify(items));
-            displayItems();
-        }
-    }
-
-    displayItems();
-</script>
-</body>
-</html>
+                        <label class="form-label fw-bold">ชื่อสิ่งของ</label>
+                        <input type="text" class="form-control" id="itemName" placeholder="เช่น iPhone 15
