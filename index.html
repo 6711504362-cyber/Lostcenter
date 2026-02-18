@@ -3,35 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYBER-RECOVERY | Image Upload System</title>
+    <title>CYBER-RECOVERY | Ultra-Readable Edition</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-pink: #ff0055;
             --neon-blue: #00f2ff;
-            --dark-bg: #050505;
-            --card-bg: #0f0f0f;
+            --neon-yellow: #fdee06;
+            --deep-black: #0a0a0a; /* ดำลึกเพื่อให้สีตัวหนังสือเด้ง */
+            --card-gray: #161616;
+            --text-main: #ffffff;
+            --text-muted: #cccccc;
         }
 
-        body { font-family: 'Sarabun', sans-serif; background-color: var(--dark-bg); color: #fff; }
-        .navbar { border-bottom: 2px solid var(--neon-blue); background: rgba(0,0,0,0.9); }
-        .navbar-brand { font-family: 'Orbitron'; color: var(--neon-blue) !important; text-shadow: 0 0 10px var(--neon-blue); }
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            background-color: var(--deep-black); 
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+        }
 
-        /* 📸 ส่วนอัปโหลดรูป (UX Benefit) */
-        .upload-container {
-            border: 2px dashed #444;
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
+        .navbar { 
+            border-bottom: 3px solid var(--neon-blue); 
+            background: #000; 
+            box-shadow: 0 4px 20px rgba(0, 242, 255, 0.2);
+        }
+        
+        .navbar-brand { 
+            font-family: 'Orbitron'; 
+            color: var(--neon-blue) !important; 
+            text-shadow: 2px 2px 0px #000, 0 0 10px var(--neon-blue); 
+            font-weight: 700;
+        }
+
+        /* 💡 การ์ดที่เน้นให้อ่านง่ายขึ้น */
+        .card-cyber {
+            background: var(--card-gray);
+            border: 2px solid #333;
             transition: 0.3s;
-            background: rgba(255, 255, 255, 0.02);
-            position: relative;
-            overflow: hidden;
+            border-radius: 4px; /* ทรงเหลี่ยมแบบอุตสาหกรรม */
+        }
+        
+        .card-cyber:hover { 
+            border-color: var(--neon-blue); 
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+        }
+
+        /* หัวข้อสิ่งของ - ใช้เงาดำช่วยให้อ่านง่าย */
+        .item-title {
+            color: var(--neon-yellow);
+            font-weight: 700;
+            text-shadow: 2px 2px 4px #000;
+            font-size: 1.4rem;
+        }
+
+        /* รายละเอียด - เน้นสีขาวตัดกับพื้นดำ */
+        .info-label {
+            color: var(--neon-blue);
+            font-size: 0.75rem;
+            font-family: 'Orbitron';
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            color: var(--text-main);
+            font-weight: 400;
+            margin-bottom: 12px;
+            border-left: 2px solid var(--neon-pink);
+            padding-left: 10px;
+        }
+
+        .badge-status {
+            font-family: 'Orbitron';
+            padding: 5px 12px;
+            border-radius: 0;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        /* ระบบอัปโหลดที่ชัดเจน */
+        .upload-container {
+            border: 2px dashed var(--neon-blue);
+            background: #000;
             min-height: 200px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
+
+        .btn-cyber-main {
+            background: var(--neon-blue);
+            color: #000;
+            font-family: 'Orbitron';
+            font-weight: 700;
+            border: none;
+            padding: 10px 25px;
+            transition: 0.3s;
+        }
+
+        .btn-cyber-main:hover {
+            background: #fff;
+            box-shadow: 0 0 20px #fff;
+            transform: translateY(-2px);
+        }
+
+        .modal-content {
+            background: var(--deep-black);
+            border: 2px solid var(--neon-blue);
+        }
+
+        .form-control, .form-select {
+            background: #111 !important;
+            border: 1px solid #444 !important;
+            color: white !important;
+        }
+
+        .form-control:focus {
+            border-color: var(--neon-blue) !important;
+            box-shadow: 0 0 10px var(--neon-blue) !important;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">⚡ CYBER-RECOVERY v3</a>
+        <button class="btn btn-cyber-main" data-bs-toggle="modal" data-bs-target="#uploadModal">NEW ENTRY</button>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-12 d-flex gap-2">
+            <button class="btn btn-outline-light btn-sm px-4" onclick="render('all')">ALL</button>
+            <button class="btn btn-outline-danger btn-sm px-4" onclick="render('lost')">LOST</button>
+            <button class="btn btn-outline-success btn-sm px-4" onclick="render('found')">FOUND</button>
+        </div>
+    </div>
+
+    <div class="row g-4" id="itemsList">
+        </div>
+</div>
+
+<div class="modal fade" id="uploadModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content text-white">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title font-orbitron text-neon-blue">SUBMIT SIGNAL DATA</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="cyberForm">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="upload-container mb-3" onclick="document.getElementById('fileInp').click()">
+                                <div id="preView" style="width:100%; height:100%; background-size:cover; display:none;"></div>
+                                <div id="upText" class="text-center">
+                                    <span class="fs-1 text-neon-blue">📤</span>
+                                    <p class="small mt-2">UPLOAD VISUAL DATA</p>
+                                </div>
+                                <input type="file" id="fileInp" hidden accept="image/*" onchange="preview(this)">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <label class="info-label">Signal Type</label>
+                            <select class="form-select mb-3" id="type">
+                                <option value="lost">LOST (ของหาย)</option>
+                                <option value="found">FOUND (เก็บของได้)</option>
+                            </select>
+                            <label class="info-label">Object Name</label>
+                            <input type="text" class="form-control mb-3" id="name" placeholder="ชื่อสิ่งของ" required>
+                            <label class="info-label">Last Coordinate</label>
+                            <input type="text" class="form-control mb-3" id="loc" placeholder="สถานที่" required>
+                            <label class="info-label">Contact Frequency</label>
+                            <input type="text" class="form-control mb-3" id="tel" placeholder="เบอร์โทร/ไอดี" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-cyber-main w-100 mt-3">BROADCAST SIGNAL</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let entries = JSON.parse(localStorage.getItem('cyberCleanDB')) || [];
+    let currentImg = "";
+
+    function preview(input) {
+        if (input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                document.getElementById('preView').style.backgroundImage = `url(${e.target.result})`;
+                document.getElementById('preView').style.display = 'block';
+                document.getElementById('upText').style.display = 'none';
+                currentImg = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function render(filter = 'all') {
+        const container = document.getElementById('itemsList');
+        container.innerHTML = "";
+        
+        const filtered = entries.filter(e => filter === 'all' || e.type === filter);
+
+        filtered.forEach((item, idx) => {
+            container.innerHTML += `
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-cyber h-100">
+                        <div style="height:200px; background:#111; overflow:hidden;">
+                            ${item.img ? `<img src="${item.img}" style="width:100%; hieght:100%; object-fit:cover;">` : 
+                            `<div class="h-100 d-flex align-items-center justify-content-center text-secondary small">NO VISUAL DATA</div>`}
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge badge-status ${item.type==='lost'?'bg-danger':'bg-success'}">
+                                    ${item.type.toUpperCase()}
+                                </span>
+                                <small class="text-secondary font-orbitron">ID-${1000+idx}</small>
+                            </div>
+                            <h3 class="item-title mb-4">${item.name}</h3>
+                            
+                            <div class="info-label">Location</div>
+                            <div class="info-value text-white">${item.loc}</div>
+                            
+                            <div class="info-label">Contact</div>
+                            <div class="info-value text-neon-yellow fw-bold">${item.tel}</div>
+                            
+                            <button class="btn btn-sm btn-outline-secondary w-100 mt-3" onclick="del(${idx})">TERMINATE ENTRY</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    document.getElementById('cyberForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        entries.unshift({
+            type: document.getElementById('type').value,
+            name: document.getElementById('name').value,
+            loc: document.getElementById('loc').value,
+            tel: document.getElementById('tel').value,
+            img: currentImg
+        });
+        localStorage.setItem('cyberCleanDB', JSON.stringify(entries));
+        this.reset();
+        document.getElementById('preView').style.display = 'none';
+        document.getElementById('upText').style.display = 'block';
+        currentImg = "";
+        bootstrap.Modal.getInstance(document.getElementById('uploadModal')).hide();
+        render();
+    });
+
+    function del(i) {
+        if(confirm('Confirm Data Termination?')) {
+            entries.splice(i, 1);
+            localStorage.setItem('cyberCleanDB', JSON.stringify(entries));
+            render();
+        }
+    }
+
+    render();
+</script>
+</body>
+</html>
