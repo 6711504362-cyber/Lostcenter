@@ -3,142 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lost & Found Portal | ศูนย์แจ้งของหายและของที่เก็บได้</title>
+    <title>CYBER-LOST & FOUND 2077</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-navy: #1a2a6c; /* น้ำเงินเข้มทางการ */
-            --accent-blue: #0052cc;  /* น้ำเงินสว่างสำหรับ Link */
-            --status-lost: #b91c1c;  /* แดงเข้ม (Crimson) ตัดกับพื้นขาวชัดเจน */
-            --status-found: #065f46; /* เขียวเข้ม (Emerald) ตัดกับพื้นขาวชัดเจน */
-            --bg-light: #f8fafc;     /* พื้นหลังเทาขาว สบายตา */
+            --neon-pink: #ff0055;
+            --neon-blue: #00f2ff;
+            --neon-yellow: #fdee06;
+            --dark-bg: #050505;
+            --card-bg: #0f0f0f;
         }
 
         body {
             font-family: 'Sarabun', sans-serif;
-            background-color: var(--bg-light);
-            color: #1e293b;
-            line-height: 1.6;
+            background-color: var(--dark-bg);
+            color: #fff;
+            overflow-x: hidden;
         }
 
-        /* Header ที่เน้นความน่าเชื่อถือ */
-        .navbar {
-            background-color: var(--primary-navy);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 1rem 0;
-        }
-
-        .hero-section {
-            background-color: white;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 60px 0;
-            margin-bottom: 40px;
-        }
-
-        .hero-title {
-            color: var(--primary-navy);
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        /* Card ดีไซน์เน้นความชัดเจน ไม่กลืนกับพื้นหลัง */
-        .card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            transition: all 0.2s ease;
-        }
-
-        .card:hover {
-            border-color: var(--accent-blue);
-            box-shadow: 0 10px 20px rgba(0, 82, 204, 0.05);
-        }
-
-        /* Badge ที่สีตัดกับเนื้อหาชัดเจน */
-        .badge-lost {
-            background-color: #fee2e2;
-            color: var(--status-lost);
-            border: 1px solid #fecaca;
-            font-weight: 600;
-        }
-
-        .badge-found {
-            background-color: #d1fae5;
-            color: var(--status-found);
-            border: 1px solid #a7f3d0;
-            font-weight: 600;
-        }
-
-        /* ปุ่มที่ดูเป็นทางการ */
-        .btn-navy {
-            background-color: var(--primary-navy);
-            color: white;
-            font-weight: 600;
-            padding: 10px 24px;
-            border-radius: 8px;
-        }
-
-        .btn-navy:hover {
-            background-color: #0f172a;
-            color: white;
-        }
-
-        .info-label {
-            font-size: 0.85rem;
-            color: #64748b;
+        h1, h2, h3, .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
-            font-weight: 600;
         }
 
-        .info-value {
-            color: #334155;
-            font-weight: 500;
-            margin-bottom: 8px;
+        /* Cyberpunk Navbar */
+        .navbar {
+            background: rgba(15, 15, 15, 0.95);
+            border-bottom: 2px solid var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue);
         }
+
+        .nav-link { color: #fff !important; margin-right: 15px; }
+        .nav-link:hover { color: var(--neon-pink) !important; text-shadow: 0 0 5px var(--neon-pink); }
+
+        /* Search Bar Custom */
+        .search-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 5px solid var(--neon-yellow);
+            margin-bottom: 30px;
+        }
+
+        .form-control-cyber {
+            background: #000;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+        }
+        .form-control-cyber:focus {
+            background: #111;
+            color: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+            border-color: var(--neon-blue);
+        }
+
+        /* Card ดีไซน์นีออน */
+        .card-cyber {
+            background: var(--card-bg);
+            border: 1px solid var(--neon-blue);
+            border-radius: 0px;
+            position: relative;
+            transition: 0.3s;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%); /* ตัดมุมแบบ Sci-fi */
+        }
+
+        .card-cyber:hover {
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+            transform: scale(1.02);
+        }
+
+        .card-lost { border-color: var(--neon-pink); }
+        .card-lost:hover { box-shadow: 0 0 20px rgba(255, 0, 85, 0.4); }
+
+        /* Button สไตล์ Glitch */
+        .btn-cyber {
+            background: transparent;
+            border: 1px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+            font-family: 'Orbitron', sans-serif;
+            border-radius: 0;
+            padding: 10px 25px;
+            position: relative;
+        }
+
+        .btn-cyber:hover {
+            background: var(--neon-yellow);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-yellow);
+        }
+
+        .badge-cyber {
+            font-size: 0.7rem;
+            padding: 5px 10px;
+            border-radius: 0;
+            text-transform: uppercase;
+        }
+
+        .text-neon-blue { color: var(--neon-blue); text-shadow: 0 0 5px var(--neon-blue); }
+        .text-neon-pink { color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink); }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-dark">
+<nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="#">
-            🛡️ Lost & Found Portal
-        </a>
+        <a class="navbar-brand text-neon-blue" href="#">⚡ CyberLost</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#" onclick="filterItems('all')">DATABASE</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="filterItems('lost')">LOST</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="filterItems('found')">FOUND</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 
-<div class="hero-section text-center">
-    <div class="container">
-        <h1 class="hero-title display-5">ศูนย์รับแจ้งของหายและส่งคืน</h1>
-        <p class="text-muted fs-5">แพลตฟอร์มกลางเพื่อความปลอดภัยและความซื่อสัตย์ในชุมชน</p>
-        <button class="btn btn-navy btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#reportModal">
-            ลงประกาศแจ้งรายการ
-        </button>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-5">
+            <h1 class="display-3 fw-bold text-neon-pink mb-3">RECOVER YOUR DATA</h1>
+            <p class="lead text-neon-blue">ศูนย์รวมการตามหาวัตถุที่สูญหายในเครือข่ายเมืองอนาคต</p>
+            <button class="btn btn-cyber btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#reportModal">ADD NEW ENTRY</button>
+        </div>
     </div>
-</div>
 
-<div class="container mb-5">
+    <div class="search-container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <input type="text" id="searchInput" class="form-control form-control-cyber" placeholder="ค้นหาตามชื่อสิ่งของ หรือ สถานที่..." onkeyup="search()">
+            </div>
+            <div class="col-md-4 text-end mt-3 mt-md-0">
+                <span class="text-neon-yellow fw-bold" id="itemCount">Entries: 0</span>
+            </div>
+        </div>
+    </div>
+
     <div class="row g-4" id="itemsList">
         </div>
 </div>
 
 <div class="modal fade" id="reportModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow-lg border-0">
-            <div class="modal-header bg-light">
-                <h5 class="modal-title fw-bold" style="color: var(--primary-navy)">กรอกรายละเอียดรายการ</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-content border-0 card-cyber">
+            <div class="modal-header border-bottom border-secondary">
+                <h5 class="modal-title text-neon-yellow">INITIALIZE LOG ENTRY</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
                 <form id="reportForm">
                     <div class="mb-3">
-                        <label class="form-label fw-bold">ประเภทประกาศ</label>
-                        <select class="form-select" id="type" required>
-                            <option value="lost">🔴 แจ้งของหาย (Lost Item)</option>
-                            <option value="found">🟢 พบของ/เก็บได้ (Found Item)</option>
+                        <label class="form-label text-neon-blue">SIGNAL TYPE</label>
+                        <select class="form-select form-control-cyber" id="type" required>
+                            <option value="lost">LOST SIGNAL (ของหาย)</option>
+                            <option value="found">RECEIVED SIGNAL (เก็บได้)</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-bold">ชื่อสิ่งของ</label>
-                        <input type="text" class="form-control" id="itemName" placeholder="เช่น iPhone 15
+                        <label class="form-label text-neon-blue">OBJECT IDENTITY</label>
+                        <input type="text" class="form-control form-control-cyber" id="itemName" placeholder="ชื่อสิ่งของ" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-neon-blue">LAST COORDINATE</label>
+                        <input type="text" class="form-control form-control-cyber" id="location" placeholder="สถานที่พบหรือหาย" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-neon-blue">CONTACT FREQUENCY</label>
+                        <input type="text" class="form-control form-control-cyber" id="contact" placeholder="เบอร์โทรหรือช่องทางติดต่อ" required>
+                    </div>
+                    <button type="submit" class="btn btn-cyber w-100 py-3 mt-3">BROADCAST SIGNAL</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    let items = JSON.parse(localStorage.getItem('cyberLostDB')) || [];
+    let currentFilter = 'all';
+
+    function renderItems(data = items) {
+        const list = document.getElementById('itemsList');
+        const count = document.getElementById('itemCount');
+        list.innerHTML = '';
+        
+        const filtered = data.filter(i => currentFilter === 'all' || i.type === currentFilter);
+        count.innerText = `ENTRIES: ${filtered.length}`;
+
+        filtered.forEach((item, index) => {
+            const isLost = item.type === 'lost';
+            list.innerHTML += `
+                <div class="col-md-4">
+                    <div class="card card-cyber ${isLost ? 'card-lost' : ''} p-3 h-100">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge badge-cyber ${isLost ? 'bg-danger' : 'bg-info text-dark'}">
+                                ${isLost ? 'LOST SIGNAL' : 'RECEIVED'}
+                            </span>
+                            <small class="text-secondary">#${index.toString().padStart(4, '0')}</small>
+                        </div>
+                        <h4 class="${isLost ? 'text-neon-pink' : 'text-neon-blue'} mb-3">${item.itemName}</h4>
+                        <div class="small opacity-75 mb-1">COORDINATE:</div>
+                        <div class="mb-2">📍 ${item.location}</div>
+                        <div class="small opacity-75 mb-1">CONTACT:</div>
+                        <div class="mb-3 text-neon-yellow">📡 ${item.contact}</div>
+                        <div class="mt-auto border-top border-secondary pt-2">
+                            <button class="btn btn-link text-secondary btn-sm p-0" onclick="deleteItem(${index})">TERMINATE ENTRY</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    reportForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        items.unshift({
+            type: document.getElementById('type').value,
+            itemName: document.getElementById('itemName').value,
+            location: document.getElementById('location').value,
+            contact: document.getElementById('contact').value
+        });
+        localStorage.setItem('cyberLostDB', JSON.stringify(items));
+        bootstrap.Modal.getInstance(document.getElementById('reportModal')).hide();
+        reportForm.reset();
+        renderItems();
+    });
+
+    function search() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = items.filter(i => 
+            i.itemName.toLowerCase().includes(query) || 
+            i.location.toLowerCase().includes(query)
+        );
+        renderItems(filtered);
+    }
+
+    function filterItems(type) {
+        currentFilter = type;
+        renderItems();
+    }
+
+    function deleteItem(idx) {
+        if(confirm('TERMINATE DATA?')) {
+            items.splice(idx, 1);
+            localStorage.setItem('cyberLostDB', JSON.stringify(items));
+            renderItems();
+        }
+    }
+
+    renderItems();
+</script>
+</body>
+</html>
